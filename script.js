@@ -6,26 +6,26 @@
   var binCount = 10;
 
     var chart1 = new Chart('#chart1');
-//    var chart2 = new Chart('#chart2');
+    var chart2 = new Chart('#chart2');
 
   function Chart (selector) {
       var chart = this;
 
-var format = d3.format(",d");
+    var format = d3.format(",d");
 
-var color = d3.scaleOrdinal()
-    .range(d3.schemeCategory10
-        .map(function(c) { c = d3.rgb(c); c.opacity = 0.6; return c; }));
+    var color = d3.scaleOrdinal()
+        .range(d3.schemeCategory10
+            .map(function(c) { c = d3.rgb(c); c.opacity = 0.6; return c; }));
 
-// console.log('color', color);        
-    
-// translates the csv to parent/child node relationship
-var stratify = d3.stratify()
-    .parentId(function(d) { 
-        return d.id.substring(0, d.id.lastIndexOf("."));     
-    });
-    
-//    chart.svg = d3.select(selector)
+    // console.log('color', color);        
+
+    // translates the csv to parent/child node relationship
+    var stratify = d3.stratify()
+        .parentId(function(d) { 
+            return d.id.substring(0, d.id.lastIndexOf("."));     
+        });
+
+    //    chart.svg = d3.select(selector)
 
       
       chart.treemap = d3.treemap()
@@ -65,8 +65,9 @@ function type(d) {
   d.value = +d.value;
   return d;
 }
-      
+
 }
+
 
     
 

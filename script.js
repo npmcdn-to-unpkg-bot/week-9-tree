@@ -5,11 +5,9 @@
   var height = 600 - margin.top - margin.bottom;
   var binCount = 10;
 
-    var chart1 = new Chart('#chart1');
-    var chart2 = new Chart('#chart2');
 
-  function Chart (selector) {
-      var chart = this;
+
+
 
     var format = d3.format(",d");
 
@@ -28,21 +26,41 @@
     //    chart.svg = d3.select(selector)
 
       
+
+d3.csv("trade-data.csv", function(error, dat) {
+  if (error) throw error;
+    data = dat;
+
+    
+    var chart1 = new Chart('#chart1');
+//    var chart2 = new Chart('#chart2');    
+    
+}); 
+    
+
+
+  function Chart (selector) {
+      var chart = this;    
+      
       chart.treemap = d3.treemap()
-    .size([width, height])
+//    .size([width, height])
+    .size([400, 400])
+
     .padding(3)
     .round(true);
 
-d3.csv("trade-data.csv", type, function(error, data) {
-  if (error) throw error;
+
+   
+      
+      
 
   var root = stratify(data)
       .sum(function(d) { return d.value; })
-      .sort(function(a, b) { return b.height - a.height || b.value - a.value; });
-
+      .sort(function(a, b) { return b.height - a.height || b.value - a.value; });      
+      
   chart.treemap(root);
 
-  d3.select("selector")
+  d3.select(selector)
     .selectAll(".node")
     .data(root.leaves())
     .enter().append("div")
@@ -59,7 +77,7 @@ d3.csv("trade-data.csv", type, function(error, data) {
     .append("div")
       .attr("class", "node-value")
       .text(function(d) { return format(d.value); });
-});
+
 
 function type(d) {
   d.value = +d.value;

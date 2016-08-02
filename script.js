@@ -27,7 +27,7 @@
 
       
 
-d3.csv("trade-data.csv", function(error, dat) {
+d3.csv("trade-data.csv", type, function(error, dat) {
   if (error) throw error;
     data = dat;
 
@@ -49,11 +49,6 @@ d3.csv("trade-data.csv", function(error, dat) {
     .padding(3)
     .round(true);
 
-
-   
-      
-      
-
   var root = stratify(data)
       .sum(function(d) { return d.value; })
       .sort(function(a, b) { return b.height - a.height || b.value - a.value; });      
@@ -73,18 +68,18 @@ d3.csv("trade-data.csv", function(error, dat) {
       .style("background", function(d) { while (d.depth > 1) d = d.parent; return color(d.id); })
     .append("div")
       .attr("class", "node-label")
-      .text(function(d) { return d.id.substring(d.id.lastIndexOf(".") + 1).split(/(?=[A-Z][^A-Z])/g).join("\n"); })
+        .text(function(d) { return d.id.substring(d.id.lastIndexOf(".") + 1)})  
     .append("div")
       .attr("class", "node-value")
       .text(function(d) { return format(d.value); });
 
-
+  }
+      
 function type(d) {
   d.value = +d.value;
   return d;
 }
 
-}
 
 
     

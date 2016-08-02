@@ -55,10 +55,10 @@ var treemap = d3.treemap()
     .padding(3)
     .round(true);
 
-d3.csv("trade-data.csv", type, function(error, data) {
+d3.csv("trade-data.csv", type, function(error, datr) {
   if (error) throw error;
 
-  var root = stratify(data)
+  var root = stratify(datr)
       .sum(function(d) { return d.value; })
       .sort(function(a, b) { return b.height - a.height || b.value - a.value; });
 

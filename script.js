@@ -1,13 +1,8 @@
 
     
-  var margin = { top: 15, right: 55, bottom: 100, left: 77  };
-  var width = 800 - margin.right - margin.left;
+  var margin = { top: 15, right: 15, bottom: 15, left: 15  };
+  var width = 600 - margin.right - margin.left;
   var height = 600 - margin.top - margin.bottom;
-  var binCount = 10;
-
-
-
-
 
     var format = d3.format(",d");
 
@@ -30,26 +25,35 @@
 d3.csv("trade-data.csv", type, function(error, dat) {
   if (error) throw error;
     data = dat;
-
     
-    var chart1 = new Chart('#chart1');
+    var chart1 = new Chart('#chart1', data);
 //    var chart2 = new Chart('#chart2');    
     
 }); 
     
 
+d3.csv("flare2.csv", type, function(error, dat) {
+  if (error) throw error;
+    data = dat;
+    
+//    var chart1 = new Chart('#chart1');
+    var chart2 = new Chart('#chart2', data);    
+    
+}); 
 
-  function Chart (selector) {
+
+  function Chart (selector, data) {
       var chart = this;    
       
+      chart.data = data;
+      
       chart.treemap = d3.treemap()
-//    .size([width, height])
-    .size([400, 400])
-
+    .size([width, height])
+//    .size([400, 400])
     .padding(3)
     .round(true);
 
-  var root = stratify(data)
+  var root = stratify(chart.data)
       .sum(function(d) { return d.value; })
       .sort(function(a, b) { return b.height - a.height || b.value - a.value; });      
       

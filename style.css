@@ -1,8 +1,8 @@
     body {
-	background-color: #e3e7e6;
+	background-color: #bec8c5;
 	font-family: 'Trebuchet MS', Helvetica, sans-serif;
-	font-size: 14px;	
-    color: #9C4206;
+	font-size: 16px;	
+    color: #000;
     position: relative;        
         
     }     
@@ -32,7 +32,7 @@
     }
 
       
-      #tooltip {
+/*      #tooltip {
         width: 300px;
         height: auto;
         padding: 10px;
@@ -44,7 +44,7 @@
 
     #tooltip.hidden {
             display: none;
-    }
+    }*/
 
 
 .node {
@@ -61,7 +61,7 @@
 
 .node-value {
   color: rgba(0,0,0,0.8);
-  font-size: 9px;
+  font-size: 14px;
   margin-top: 1px;
 }
 
@@ -70,15 +70,17 @@
     }*/
 
 div#chart1 {
-    border-style: dashed;
+/*    border-style: dashed;*/
     float: left;
+    position: relative;
 /*    background-color: red;*/
     
 }
 
 div#chart2 {
-    border-style: dotted;
+/*    border-style: dotted;*/
     float: right;
+    position: relative;    
 /*    background-color: blue;*/
     
 }

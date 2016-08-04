@@ -1,0 +1,19 @@
+id,value
+exports,
+exports.trade,
+exports.trade.Food,127728
+exports.trade.Industrial,417062
+exports.trade.Capital Goods,539700
+exports.trade.Automotive goods,151918
+exports.trade.Consumer,197284
+exports.trade.Other,54947
+exports.services,
+exports.services.Maintenance,24035
+exports.services.Transport,87222
+exports.services.Travel,204523
+exports.services.Insurance,17142
+exports.services.Finance,102460
+exports.services.Intellectual Property,124663
+exports.services.Telecom,35894
+exports.services.Other,134647
+exports.services.Government Services,20271

@@ -1,94 +1,53 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>Week 9: Treemap</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+    
+  <link rel="stylesheet" href="style.css">    
 
-body {
-  font: 14px sans-serif;
-  position: relative;
-}
-
-.node {
-  box-sizing: border-box;
-  position: absolute;
-  overflow: hidden;
-}
-
-.node-label {
-  padding: 4px;
-  line-height: 1em;
-  white-space: pre;
-}
-
-.node-value {
-  color: rgba(0,0,0,0.8);
-  font-size: 14px;
-  margin-top: 1px;
-}
-
-</style>
+</head>
 <body>
-<script src="http://d3js.org/d3.v4.min.js"></script>
-<script>
+<div class='header section'>
+  <div class='container'>
+    <h1>Week 9: Import and Export Data</h1>
+    <p>The below treemaps show US imports and exports broken down by trade and services. All numbers are in millions of USD.</p>
+      
+    <p>Sources: <a href='https://www.census.gov/foreign-trade/balance/c4120.html'>Census.gov Trade Data, </a>  
+    <a href='http://www.bea.gov/iTable/bp_download_modern.cfm?pid=11'>Bureau of Economic Analysis</a></p>
+  </div>
+</div>
+<div class='controls section'>
 
-var width = 960,
-    height = 800;
-
-var format = d3.format(",d");
-
-var color = d3.scaleOrdinal()
-    .range(d3.schemeCategory10
-        .map(function(c) { c = d3.rgb(c); c.opacity = 0.6; return c; }));
-
-// console.log('color', color);        
+</div>    
     
-// translates the csv to parent/child node relationship
-var stratify = d3.stratify()
-    .parentId(function(d) { 
-        return d.id.substring(0, d.id.lastIndexOf("."));     
-    });
+<div class='main section'>
+  <div class='container'>
+    <div class="row">
+        <div id="label" style="width:50%">
+            <h3>Imports</h3>                                    
+        </div>
+        <div id="label" style="width:50%">
+            <h3>Exports</h3>
+        </div>
+    </div>        
+      
+    <div class="row">
+        <div id="chart1" style="width:50%">    
+        </div>
+        <div id="chart2" style="width:50%">
+        </div>
+    </div>       
+  </div>
+</div>
     
-// console.log('strat', stratify);    
     
-
-var treemap = d3.treemap()
-    .size([width, height])
-    .padding(3)
-    .round(true);
-
-d3.csv("trade-data.csv", type, function(error, datr) {
-  if (error) throw error;
-
-  var root = stratify(datr)
-      .sum(function(d) { return d.value; })
-      .sort(function(a, b) { return b.height - a.height || b.value - a.value; });
-
-  treemap(root);
-
-  d3.select("body")
-    .selectAll(".node")
-    .data(root.leaves())
-    .enter().append("div")
-      .attr("class", "node")
-      .attr("title", function(d) { return d.id + "\n" + format(d.value); })
-      .style("left", function(d) { return d.x0 + "px"; })
-      .style("top", function(d) { return d.y0 + "px"; })
-      .style("width", function(d) { return d.x1 - d.x0 + "px"; })
-      .style("height", function(d) { return d.y1 - d.y0 + "px"; })
-      .style("background", function(d) { while (d.depth > 1) d = d.parent; return color(d.id); })
-    .append("div")
-      .attr("class", "node-label")
-//      .text(function(d) { return d.id.substring(d.id.lastIndexOf(".") + 1).split(/(?=[A-Z][^A-Z])/g).join("\n"); })
-        .text(function(d) { return d.id.substring(d.id.lastIndexOf(".") + 1)})
-
-  
-    .append("div")
-      .attr("class", "node-value")
-      .text(function(d) { return format(d.value); });
-});
-
-function type(d) {
-  d.value = +d.value;
-  return d;
-}
-
-</script>
+    <script src="//d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="https://npmcdn.com/d3-tip@0.6.7/index.js"></script>        
+    
+    <script type="text/javascript" src="script.js"></script>
+    
+</body>
+</html>    

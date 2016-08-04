@@ -32,7 +32,7 @@
     }
 
       
-/*      #tooltip {
+      #tooltip {
         width: 300px;
         height: auto;
         padding: 10px;
@@ -44,7 +44,7 @@
 
     #tooltip.hidden {
             display: none;
-    }*/
+    }
 
 
 .node {
@@ -84,3 +84,8 @@ div#chart2 {
 /*    background-color: blue;*/
     
 }
+
+div#label {
+    float: left;    
+}
+

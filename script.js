@@ -1,84 +1,143 @@
 
     
-  var margin = { top: 15, right: 15, bottom: 15, left: 15  };
-  var width = 600 - margin.right - margin.left;
-  var height = 600 - margin.top - margin.bottom;
+    var margin = { top: 15, right: 15, bottom: 45, left: 15  };
+    var width = 600 - margin.right - margin.left;
+    var height = 600 - margin.top - margin.bottom;
 
+    // add comma to big numbers
     var format = d3.format(",d");
 
+
+    // generate colors
     var color = d3.scaleOrdinal()
         .range(d3.schemeCategory10
-            .map(function(c) { c = d3.rgb(c); c.opacity = 0.6; return c; }));
+            .map(function(c) { c = d3.rgb(c); 
+                              c.opacity = 0.6; 
+                              return c; 
+                             })
+              );
 
     // console.log('color', color);        
 
+
     // translates the csv to parent/child node relationship
-    var stratify = d3.stratify()
+    var stratify = d3.stratify()    
         .parentId(function(d) { 
-            return d.id.substring(0, d.id.lastIndexOf("."));     
+//            if (d.id.substring(0, d.id.lastIndexOf(".")) == 'china') { return d.id.substring(0, d.id.lastIndexOf(".")); }
+//            else { return 'red'; } 
+            return d.id.substring(0, d.id.lastIndexOf("."));   
+
         });
 
-    //    chart.svg = d3.select(selector)
+    // CHART 1
+    d3.csv("imports.csv", type, function(error, data) {
+      if (error) throw error;
 
-      
-
-d3.csv("trade-data.csv", type, function(error, dat) {
-  if (error) throw error;
-    data = dat;
-    
-    var chart1 = new Chart('#chart1', data);
-//    var chart2 = new Chart('#chart2');    
+        var chart1 = new Chart('#chart1', data);
     
 }); 
     
+    // CHART 2
+    d3.csv("exports.csv", type, function(error, data) {
+      if (error) throw error;
 
-d3.csv("flare2.csv", type, function(error, dat) {
-  if (error) throw error;
-    data = dat;
-    
-//    var chart1 = new Chart('#chart1');
-    var chart2 = new Chart('#chart2', data);    
-    
+        var chart2 = new Chart('#chart2', data);    
 }); 
 
 
-  function Chart (selector, data) {
-      var chart = this;    
+    function Chart (selector, data) {
+        var chart = this;    
       
-      chart.data = data;
+        chart.data = data;
+        
+//        console.log('chat', chart.data);
       
-      chart.treemap = d3.treemap()
-    .size([width, height])
-//    .size([400, 400])
-    .padding(3)
-    .round(true);
+        chart.treemap = d3.treemap()
+        .size([width, height])
+        .padding(2)
+        .round(true);
 
-  var root = stratify(chart.data)
-      .sum(function(d) { return d.value; })
-      .sort(function(a, b) { return b.height - a.height || b.value - a.value; });      
+        var root = stratify(chart.data)
+        .sum(function(d) { return d.value; })
+        .sort(function(a, b) { return b.height - a.height || b.value - a.value; });      
+        
+// console.log('root', root);        
+// console.log('root', chart.treemap(root).children[1].id);                
       
-  chart.treemap(root);
+//        if (chart.treemap(root).children[1].id === 'exports.services') {
+        chart.treemap(root);            
+            
+//        }
+        
 
-  d3.select(selector)
-    .selectAll(".node")
-    .data(root.leaves())
-    .enter().append("div")
-      .attr("class", "node")
-      .attr("title", function(d) { return d.id + "\n" + format(d.value); })
-      .style("left", function(d) { return d.x0 + "px"; })
-      .style("top", function(d) { return d.y0 + "px"; })
-      .style("width", function(d) { return d.x1 - d.x0 + "px"; })
-      .style("height", function(d) { return d.y1 - d.y0 + "px"; })
-      .style("background", function(d) { while (d.depth > 1) d = d.parent; return color(d.id); })
-    .append("div")
-      .attr("class", "node-label")
-        .text(function(d) { return d.id.substring(d.id.lastIndexOf(".") + 1)})  
-    .append("div")
-      .attr("class", "node-value")
-      .text(function(d) { return format(d.value); });
 
+        d3.select(selector)
+        .selectAll(".node")
+        .data(root.leaves())
+        .enter().append("div")
+            .attr("class", "node")
+            // this is for a tooltip; actual label is below
+            .attr("title", function(d) { return d.id + "\n" + format(d.value); })       
+            .style("left", function(d) { return d.x0 + "px"; })
+            .style("top", function(d) { return d.y0 + "px"; })
+            .style("width", function(d) { return d.x1 - d.x0 + "px"; })
+            .style("height", function(d) { return d.y1 - d.y0 + "px"; })
+            .style("background", function(d) { while (d.depth > 1) d = d.parent; return color(d.id); })
+        .append("div")
+            // this is the box label
+            .attr("class", "node-label")                                                
+                .text(function(d) { return d.id.substring(d.id.lastIndexOf(".") + 1)})  
+        .append("div")
+            // the box value
+            .attr("class", "node-value")                                                
+            .text(function(d) { return format(d.value); });
+        
+        
+        
+/*              selectAll('.node').on('mouseover', function(d) {       
+    d3.select("#tooltip")
+      .text(d)
+    
+    d3.select("#tooltip").classed("hidden", false);         //Show the tooltip
+    })
+        .on('mouseout', function() {                            //Hide the tooltip
+        d3.select("#tooltip").classed("hidden", true);
+    } );  */    
+    
+    
+    
+            
+            
+            
+        
+        
+
+//        chart.update();
   }
       
+//    Chart.prototype.update = function () {
+//        var chart = this;
+//
+//
+//        
+//    }
+    
+    
+/*    d3.select("div").on("click", function() {
+        if (d3.select('div').classed('active') === false) {
+            console.log("here");
+            d3.select('div').classed('active', true);
+  
+        } else {
+                console.log("here 2");
+            d3.select('div').classed('active', false);
+//            updateTable();
+        }    
+        
+        
+    });  */  
+
+
 function type(d) {
   d.value = +d.value;
   return d;

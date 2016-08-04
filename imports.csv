@@ -1,0 +1,19 @@
+id,value
+imports,
+imports.trade,
+imports.trade.Food,128783
+imports.trade.Industrial,492348
+imports.trade.Capital Goods,606730
+imports.trade.Automotive goods,350053
+imports.trade.Consumer,596542
+imports.trade.Other,85823
+imports.services,
+imports.services.Maintenance,8996
+imports.services.Transport,97049
+imports.services.Travel,112871
+imports.services.Insurance,47773
+imports.services.Finance,25162
+imports.services.Intellectual,39494
+imports.services.Telecom,36440
+imports.services.Other,99355
+imports.services.Government Services,21515
